@@ -1,159 +1,122 @@
 *{margin: 0;padding: 0;}
 *{box-sizing: border-box;}
-
 body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+
     height: 100vh;
     border: 1px solid red;
     background: #178;
 }
-
 .fox{
-    width: 212px;
-    height: 273px;
+    top: 50%;
+    left: 50%;
+    width: 215px;
+    height: 275px;
     position: relative;
-    transform-style: preserve-3d;
-}
+    transform: translate(-50%,-50%);
 
+}
 .head{
     position: absolute;
     height: 182px;
     width: 182px;
-    background: #cf712f;
+    background-color: #cf712f;
     border-radius: 50%;
     left: 32px;
-
+    z-index: 2;
+    overflow: hidden;
 }
-
-.shakeHead{
-    height: 182px;
+.head::before, .head::after{
+    content:'';
     width: 182px;
-    left: 32px;
-    animation: shakeHead 1.5s alternate infinite;
-}
-@keyframes shakeHead {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(18deg);
-
-    }
-}
-
-.head > .faces >.left{
-    width: 91px;
-    height: 91px;
+    height: 182px;
     background-color: white;
-    border-radius: 0 100%;
-    top: 91px;
-    left: 0;
+    border-radius: 50%;
+    bottom: -91px;
     position: absolute;
+    z-index: 1;
+
 }
-.head > .faces >.right{
-    width: 91px;
-    height: 91px;
-    background-color: white;
-    border-radius: 100% 0;
-    top: 91px;
-    right: 0;
-    position: absolute;
+.head::before{
+    left:-91px;
+}
+.head::after{
+    right:-91px;
 }
 
-.head > .eyes >.left{
+.head .eye{
     width: 18px;
     height: 9px;
     border-radius: 18px 18px 0 0;
     background-color:  black;
-    transform:rotate( 45deg);
+    /* transform:rotate( 45deg); */
     position: absolute;
-    top: 138px;
-    left: 32px;
-    animation: open 1.5s alternate infinite ease;
+    z-index: 2;
+    bottom: 38px;
+    animation: blink 5s step-start 0s infinite;
 }
-@keyframes open {
-    0% {
+.head .eye:nth-child(odd){
+    left: 36px;
+    transform: rotate(45deg);
 
-    }
-    100% {
-        border-radius: 18px;
-
-    }
 }
-.head > .eyes >.right {
-    width: 18px;
-    height: 9px;
-    border-radius: 18px 18px 0 0;
-    background-color: black;
+.head .eye:nth-child(even){
+    right: 36px;
     transform: rotate(-45deg);
+
+}
+.ear{
+    width: 93px;
+    height: 93px;
+    display: block;
+    background: #ff9090;
     position: absolute;
-    top: 138px;
-    right: 32px;
-    animation: open 1.5s alternate infinite;
+    top: 0px;
+}
+.ear:nth-child(odd){
+    border-radius: 0 93px 0 0;
+    left: 33px;
+}
+.ear:nth-child(even){
+    border-radius: 93px 0 0 0;
+    right: 2px;
+
 }
 
-.head > .nose{
-    width: 28px;
-    height: 28px;
+.nose{
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
     position: absolute;
-    left: 50% ;
-    margin-left:-14px;
-    bottom: -14px;
+    right: 50%;
+    margin-right:-28px;
+    top: 169px;
+    z-index: 2;
     background-color: black;
 }
-
-
-
-.head > .ears .left{
-    width: 92px;
-    height: 92px;
+.body{
+    width: 106px;
+    height: 212px;
+    display: block;
+    background: #cf712f;
+    border-radius: 0 424px 424px 0;
     position: absolute;
-    background-color: #ff8d3b;
-    border-radius:0 92px 0 0;
     z-index: -1;
-    top: -4px;
+    bottom: 1px;
+    right: 0px;
 }
-.head > .ears .right{
-    width: 92px;
-    height: 92px;
-    position: absolute;
-    background-color: #ff8d3b;
-    border-radius:92px 0 0 0;
-    z-index: -1;
-    top: -4px;
-    right: 0
-}
-
-
-
 .tail{
     width: 212px;
-    height: 212px;
+    height: 106px;
     position: absolute;
     background-color: #cf712f;
     border-radius: 106px;
     z-index: -1;
-    top:66px;
+    top:168px;
     overflow: hidden;
+    border-radius:  0 0 424px 424px;
 }
-
-.tail::before{
-    content:'';
-    position: absolute;
-    width: 212px;
-    height: 212px;
-    border-radius: 100px;
-    background-color: #1f7586;
-
-    clip:rect(0, 100px, 100px, 0);
-}
-
 .tail::after{
     content:'';
-    top:100px;
     position: absolute;
     width: 30px;
     height: 30px;
@@ -161,10 +124,40 @@ body {
     background-color: white;
 }
 
+@keyframes blink{
+    15% {
+        height: 1px;
+    }
+    45% {
+        height: 9px;
+    }
+    50% {
+        height: 1px;
+    }
+}
 
 
+.fox:hover .ear:nth-child(odd) {
+    left: 48px;
+}
+.fox:hover .ear:nth-child(even) {
+    right: -1px;
+    top: 22px;
+}
+.fox:hover .nose {
+    width: 20px;
+    height: 20px;
+    top: 168px;
+    right: 133px;
+}
+.fox:hover .ear, .fox:hover .head{
+    transform: rotate(15deg);
+    background: #dbffff;
+}
+.fox:hover .head, .fox:hover .body, .fox:hover .tail{
+    background-color: #afd6e4;
 
-
+}
 
 
 
